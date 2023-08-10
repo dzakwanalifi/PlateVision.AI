@@ -7,8 +7,8 @@ import pandas as pd
 import time
 import io
 import zipfile
-import cv2
 
+# Inisialisasi session state
 if 'results_df' not in st.session_state:
     st.session_state.results_df = None
 if 'image_outputs' not in st.session_state:
@@ -24,8 +24,36 @@ st.image(logo)
 with st.expander("Apa itu PlateVision.AI"):
     st.write("PlateVision.AI adalah sebuah aplikasi yang memanfaatkan teknologi kecerdasan buatan untuk prediksi plat nomor kendaraan dengan tingkat akurasi yang sangat tinggi. Dengan menggunakan model YOLOv5x yang telah dilatih menggunakan lebih dari 900 dataset plat nomor, PlateVision.AI mampu mengenali dan memprediksi plat nomor dengan akurasi mencapai 99 persen. Dengan kombinasi kekuatan teknologi YOLOv5x dan pelatihan dataset yang komprehensif, PlateVision.AI memberikan solusi efisien dan andal untuk mengenali plat nomor kendaraan secara otomatis dan akurat.")
 
-with st.expander("Metrik model YOLOv5x"):
-    st.image("assets/training plot.png", caption="Kurva Training YoloV5x")
+with st.expander("Model YOLOv5x"):
+
+    st.subheader("YOLOv5x")
+    st.write("YOLOv5x merupakan varian YOLO dengan arsitektur xlarge. Sebagai perkembangan dalam metodologi deteksi objek, YOLOv5x menggabungkan elemen penting dari model YOLOv5 yang dikembangkan oleh Ultralytics, dengan integrasi head split anchor-free dan objectness-free yang sebelumnya diperkenalkan pada model YOLOv8. Adaptasi ini mempertajam arsitektur model, menghasilkan keseimbangan antara akurasi dan kecepatan yang lebih baik dalam tugas deteksi objek. Dengan hasil empiris dan fitur-fiturnya, YOLOv5x memberikan alternatif efisien bagi mereka yang mencari solusi tangguh baik dalam penelitian maupun aplikasi praktis.")
+
+    st.subheader("Parameter Pelatihan Model")
+    
+    params = [
+    ["epochs", 100, "Jumlah epoch pelatihan"],
+    ["imgsz", 320, "Ukuran gambar input sebagai bilangan bulat"],
+    ["batch", 16, "Jumlah gambar per batch"],
+    ["lr0", 0.001, "Tingkat pembelajaran awal"],
+    ["lrf", 0.01, "Tingkat pembelajaran akhir (lr0 * lrf)"],
+    ["dropout", 0.2, "Penggunaan regulasi dropout (hanya untuk pelatihan klasifikasi)"],
+    ["optimizer", "AdamW", "Optimizer yang digunakan"],
+    ["momentum", 0.937, "Momentum SGD/beta1 Adam"],
+    ["weight_decay", 0.0005, "Weight decay optimizer 5e-4"],
+    ["warmup_epochs", 3.0, "Jumlah epoch pemanasan"],
+    ["warmup_momentum", 0.8, "Momentum awal pemanasan"],
+    ["warmup_bias_lr", 0.1, "Learning rate awal pemanasan"],
+    ["iou", 0.7, "Intersection over Union"],
+    ["max_det", 300, "Jumlah deteksi maksimal"]
+    ]
+
+    params_df = pd.DataFrame(params, columns=["Parameter", "Nilai", "Keterangan"])
+    st.dataframe(data=params_df, hide_index=True, use_container_width=True)
+
+    st.subheader("Metrik Pelatihan Model")
+
+    st.image("assets/training plot.png", caption="Kurva Pelatihan YoloV5x")
 
 input_type = st.radio("Pilih jenis input:", ("Satuan", "Banyak"))
 
@@ -109,7 +137,7 @@ if input_type == "Banyak":
                             rect = plt.Rectangle((box['x1'], box['y1']), box['x2'] - box['x1'], box['y2'] - box['y1'],
                                                 fill=False, color='red', linewidth=2)
                             ax.add_patch(rect)
-                            font_size = int(image.width / 80)
+                            font_size = int(image.width / 80)  # Adjust font size proportionally
                             plt.text(box['x1'], box['y1'], pred['name'], color='black', backgroundcolor='white', fontsize=font_size)
                         plt.axis('off')
                         st.pyplot(fig, bbox_inches='tight', pad_inches=0)
@@ -132,7 +160,7 @@ if input_type == "Banyak":
                             rect = plt.Rectangle((box['x1'], box['y1']), box['x2'] - box['x1'], box['y2'] - box['y1'],
                                                 fill=False, color='red', linewidth=2)
                             ax.add_patch(rect)
-                            font_size = int(image.width / 80)
+                            font_size = int(image.width / 80)  # Adjust font size proportionally
                             plt.text(box['x1'], box['y1'], pred['name'], color='black', backgroundcolor='white', fontsize=font_size)
                         plt.axis('off')
                         plt.savefig(f"{uploaded_image.name}", bbox_inches='tight', pad_inches=0)
@@ -191,7 +219,7 @@ else:
                 rect = plt.Rectangle((box['x1'], box['y1']), box['x2'] - box['x1'], box['y2'] - box['y1'],
                                     fill=False, color='red', linewidth=2)
                 ax.add_patch(rect)
-                font_size = int(image.width / 80)
+                font_size = int(image.width / 80)  # Adjust font size proportionally
                 plt.text(box['x1'], box['y1'], pred['name'], color='black', backgroundcolor='white', fontsize=font_size)
             plt.axis('off')
             st.pyplot(fig, bbox_inches='tight', pad_inches=0)
