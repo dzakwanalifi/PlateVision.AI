@@ -8,6 +8,13 @@ import time
 import io
 import zipfile
 
+fav_logo = Image.open('assets/mini-logo.png')
+st.set_page_config(
+        page_title="PlateVision.AI",
+        page_icon=fav_logo,
+        layout="wide",
+    )
+
 # Inisialisasi session state
 if 'results_df' not in st.session_state:
     st.session_state.results_df = None
@@ -22,7 +29,7 @@ logo = Image.open('assets/logo.png')
 st.image(logo)
 
 with st.expander("Apa itu PlateVision.AI"):
-    st.write("PlateVision.AI adalah sebuah aplikasi yang memanfaatkan teknologi kecerdasan buatan untuk prediksi plat nomor kendaraan dengan tingkat akurasi yang sangat tinggi. Dengan menggunakan model YOLOv5x yang telah dilatih menggunakan lebih dari 900 dataset plat nomor, PlateVision.AI mampu mengenali dan memprediksi plat nomor dengan akurasi mencapai 99 persen. Dengan kombinasi kekuatan teknologi YOLOv5x dan pelatihan dataset yang komprehensif, PlateVision.AI memberikan solusi efisien dan andal untuk mengenali plat nomor kendaraan secara otomatis dan akurat.")
+    st.write("PlateVision.AI adalah sebuah aplikasi yang memanfaatkan teknologi kecerdasan buatan untuk prediksi plat nomor kendaraan dengan tingkat akurasi yang sangat tinggi. Dengan menggunakan model YOLOv5x yang telah dilatih menggunakan 900 dataset gambar plat nomor, PlateVision.AI mampu mengenali dan memprediksi plat nomor dengan akurasi mencapai 99%. Dengan kombinasi kekuatan teknologi YOLOv5x dan pelatihan dataset yang komprehensif, PlateVision.AI memberikan solusi efisien dan andal untuk mengenali plat nomor kendaraan secara otomatis dan akurat.")
 
 with st.expander("Model YOLOv5x"):
 
