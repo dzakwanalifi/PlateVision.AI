@@ -59,7 +59,7 @@ with st.expander("Model YOLOv5x"):
 
     st.subheader("Metrik Pelatihan Model")
 
-    st.image("assets/training plot.png", caption="Kurva Pelatihan YoloV5x")
+    st.image("assets/training-plot.png", caption="Kurva Pelatihan YoloV5x")
 
 input_type = st.radio("Pilih jenis input:", ("Satuan", "Banyak"))
 
