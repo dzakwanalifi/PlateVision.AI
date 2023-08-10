@@ -39,9 +39,9 @@ Anda dapat mengakses aplikasi PlateVision.AI melalui [tautan ini](https://platev
 
 Jika Anda ingin menjalankan aplikasi PlateVision.AI secara lokal, Anda dapat mengikuti langkah-langkah berikut:
 
-1. Clone repositori: `git clone https://github.com/yourusername/platevision-ai.git`
-2. Masuk ke direktori repositori: `cd platevision-ai`
+1. Clone repositori: `git clone https://github.com/dzakwanalifi/PlateVision.AI.git`
+2. Masuk ke direktori repositori: `cd PlateVision.AI`
 3. Instal dependensi: `pip install -r requirements.txt`
-4. Jalankan aplikasi: `streamlit run platevision.py`
+4. Jalankan aplikasi: `streamlit run app.py`
 
 Pastikan Anda telah menginstal Python dan pip sebelum menjalankan langkah-langkah di atas.
