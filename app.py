@@ -12,7 +12,6 @@ fav_logo = Image.open('assets/mini-logo.png')
 st.set_page_config(
         page_title="PlateVision.AI",
         page_icon=fav_logo,
-        layout="wide",
     )
 
 # Inisialisasi session state
