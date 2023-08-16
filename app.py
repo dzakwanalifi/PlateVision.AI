@@ -14,7 +14,6 @@ st.set_page_config(
         page_icon=fav_logo,
     )
 
-# Inisialisasi session state
 if 'results_df' not in st.session_state:
     st.session_state.results_df = None
 if 'image_outputs' not in st.session_state:
@@ -127,11 +126,12 @@ if input_type == "Banyak":
 
             results_df = pd.DataFrame(results_list)
             
-            # Sort the dataframe based on the numeric part of "Nama File"
+            st.session_state.results_df = pd.DataFrame(results_list)
+            st.dataframe(st.session_state.results_df, use_container_width=True, hide_index=True)
+            
             results_df['Numeric Part'] = results_df['Nama File'].str.extract(r'(\d+)', expand=False).astype(int)
             sorted_results_df = results_df.sort_values('Numeric Part')
 
-            # Drop the temporary column
             sorted_results_df = sorted_results_df.drop('Numeric Part', axis=1)
 
             st.dataframe(sorted_results_df, use_container_width=True, hide_index=True)
@@ -153,7 +153,7 @@ if input_type == "Banyak":
                             rect = plt.Rectangle((box['x1'], box['y1']), box['x2'] - box['x1'], box['y2'] - box['y1'],
                                                 fill=False, color='red', linewidth=2)
                             ax.add_patch(rect)
-                            font_size = int(image.width / 80)  # Adjust font size proportionally
+                            font_size = int(image.width / 80)
                             plt.text(box['x1'], box['y1'], pred['name'], color='black', backgroundcolor='white', fontsize=font_size)
                         plt.axis('off')
                         st.pyplot(fig, bbox_inches='tight', pad_inches=0)
@@ -176,7 +176,7 @@ if input_type == "Banyak":
                             rect = plt.Rectangle((box['x1'], box['y1']), box['x2'] - box['x1'], box['y2'] - box['y1'],
                                                 fill=False, color='red', linewidth=2)
                             ax.add_patch(rect)
-                            font_size = int(image.width / 80)  # Adjust font size proportionally
+                            font_size = int(image.width / 80)
                             plt.text(box['x1'], box['y1'], pred['name'], color='black', backgroundcolor='white', fontsize=font_size)
                         plt.axis('off')
                         plt.savefig(f"{uploaded_image.name}", bbox_inches='tight', pad_inches=0)
@@ -235,7 +235,7 @@ else:
                 rect = plt.Rectangle((box['x1'], box['y1']), box['x2'] - box['x1'], box['y2'] - box['y1'],
                                     fill=False, color='red', linewidth=2)
                 ax.add_patch(rect)
-                font_size = int(image.width / 80)  # Adjust font size proportionally
+                font_size = int(image.width / 80)
                 plt.text(box['x1'], box['y1'], pred['name'], color='black', backgroundcolor='white', fontsize=font_size)
             plt.axis('off')
             st.pyplot(fig, bbox_inches='tight', pad_inches=0)
