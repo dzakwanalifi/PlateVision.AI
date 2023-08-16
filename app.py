@@ -27,6 +27,8 @@ if 'input_type' not in st.session_state:
 logo = Image.open('assets/logo.png')
 st.image(logo)
 
+st.success('Tim BDC - SD2023040000215', icon="💡")
+
 with st.expander("Apa itu PlateVision.AI"):
     st.write("PlateVision.AI adalah sebuah aplikasi yang memanfaatkan teknologi kecerdasan buatan untuk prediksi plat nomor kendaraan dengan tingkat akurasi yang sangat tinggi. Dengan menggunakan model YOLOv5x yang telah dilatih menggunakan 900 dataset gambar plat nomor, PlateVision.AI mampu mengenali dan memprediksi plat nomor dengan akurasi mencapai 99%. Dengan kombinasi kekuatan teknologi YOLOv5x dan pelatihan dataset yang komprehensif, PlateVision.AI memberikan solusi efisien dan andal untuk mengenali plat nomor kendaraan secara otomatis dan akurat.")
 
@@ -123,8 +125,16 @@ if input_type == "Banyak":
 
             st.subheader("Hasil Prediksi")
 
-            st.session_state.results_df = pd.DataFrame(results_list)
-            st.dataframe(st.session_state.results_df, use_container_width=True, hide_index=True)
+            results_df = pd.DataFrame(results_list)
+            
+            # Sort the dataframe based on the numeric part of "Nama File"
+            results_df['Numeric Part'] = results_df['Nama File'].str.extract(r'(\d+)', expand=False).astype(int)
+            sorted_results_df = results_df.sort_values('Numeric Part')
+
+            # Drop the temporary column
+            sorted_results_df = sorted_results_df.drop('Numeric Part', axis=1)
+
+            st.dataframe(sorted_results_df, use_container_width=True, hide_index=True)
 
             if len(uploaded_images) <= 5:
                 st.subheader("Output Gambar")
