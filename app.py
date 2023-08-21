@@ -29,7 +29,7 @@ st.image(logo)
 st.success('Tim BDC - SD2023040000215', icon="💡")
 
 with st.expander("Apa itu PlateVision.AI"):
-    st.write("PlateVision.AI adalah sebuah aplikasi yang memanfaatkan teknologi kecerdasan buatan untuk prediksi plat nomor kendaraan dengan tingkat akurasi yang sangat tinggi. Dengan menggunakan model YOLOv5x yang telah dilatih menggunakan 900 dataset gambar plat nomor, PlateVision.AI mampu mengenali dan memprediksi plat nomor dengan akurasi mencapai 99%. Dengan kombinasi kekuatan teknologi YOLOv5x dan pelatihan dataset yang komprehensif, PlateVision.AI memberikan solusi efisien dan andal untuk mengenali plat nomor kendaraan secara otomatis dan akurat.")
+    st.write("PlateVision.AI adalah sebuah aplikasi yang memanfaatkan teknologi kecerdasan buatan untuk prediksi plat nomor kendaraan dengan tingkat akurasi yang tinggi. Dengan menggunakan model YOLOv5x, PlateVision.AI mampu mengenali dan memprediksi plat nomor dengan akurasi mencapai 99%. Dengan kombinasi kekuatan teknologi YOLOv5x dan pelatihan dataset yang komprehensif, PlateVision.AI memberikan solusi efisien dan andal untuk mengenali plat nomor kendaraan secara otomatis dan akurat.")
 
 with st.expander("Model YOLOv5x"):
 
@@ -117,7 +117,7 @@ if input_type == "Banyak":
 
                 file_name = uploaded_image.name
 
-                results_list.append({"Nama File": file_name, "Prediksi": combined_classes})
+                results_list.append({"Nama File": file_name, "Vehicleregistrationplatebymodel": combined_classes})
                 my_bar.progress((idx + 1) / total_images, text=progress_text)
 
                 st.session_state.image_outputs.append((uploaded_image, sorted_predictions))
@@ -158,7 +158,7 @@ if input_type == "Banyak":
 
         if st.session_state.output_tab is not None and st.session_state.results_df is not None:
             csv_buffer = io.StringIO()
-            st.session_state.results_df.to_csv(csv_buffer, index=False)
+            st.session_state.results_df.to_csv(csv_buffer)
             csv_bytes = csv_buffer.getvalue()
             st.download_button("Unduh Hasil Prediksi (CSV)", data=csv_bytes, file_name="hasil_prediksi.csv", mime="text/csv")
 
