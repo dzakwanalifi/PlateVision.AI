@@ -117,7 +117,7 @@ if input_type == "Banyak":
 
                 file_name = uploaded_image.name
 
-                results_list.append({"Nama File": file_name, "Vehicleregistrationplatebymodel": combined_classes})
+                results_list.append({"Name of File": file_name, "Vehicleregistrationplatebymodel": combined_classes})
                 my_bar.progress((idx + 1) / total_images, text=progress_text)
 
                 st.session_state.image_outputs.append((uploaded_image, sorted_predictions))
@@ -126,12 +126,14 @@ if input_type == "Banyak":
 
             results_df = pd.DataFrame(results_list)
             
-            results_df['Numeric Part'] = results_df['Nama File'].str.extract(r'(\d+)', expand=False).astype(int)
+            results_df['Numeric Part'] = results_df['Name of File'].str.extract(r'(\d+)', expand=False).astype(int)
             sorted_results_df = results_df.sort_values('Numeric Part')
-
             sorted_results_df = sorted_results_df.drop('Numeric Part', axis=1)
+            sorted_results_df = sorted_results_df.reset_index()
+            sorted_results_df = sorted_results_df.drop('index', axis=1)
 
             st.session_state.results_df = pd.DataFrame(sorted_results_df)
+
             st.dataframe(st.session_state.results_df, use_container_width=True, hide_index=True)
             
             if len(uploaded_images) <= 5:
